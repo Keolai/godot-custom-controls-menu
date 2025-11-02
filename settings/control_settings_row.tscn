@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm10goi3aup2q"]
+
+[ext_resource type="Script" uid="uid://rx1f0888vlc2" path="res://settings/scripts/control_row.gd" id="1_03d8w"]
+
+[node name="Row" type="HBoxContainer" node_paths=PackedStringArray("BUTTON", "LABEL")]
+custom_minimum_size = Vector2(100, 30)
+size_flags_horizontal = 3
+script = ExtResource("1_03d8w")
+BUTTON = NodePath("Button")
+LABEL = NodePath("MarginContainer/label")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="label" type="RichTextLabel" parent="MarginContainer"]
+layout_mode = 2
+text = "label
+"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "press me
+"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
