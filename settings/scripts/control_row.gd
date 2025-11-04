@@ -2,6 +2,7 @@ class_name control_row extends HBoxContainer
 
 @export var BUTTON : Button
 @export var LABEL : RichTextLabel
+
 var keycode : String
 var newEvent : InputEvent
 var curEvent : InputEvent
@@ -9,6 +10,7 @@ var changedInput : bool = false
 var unbound : bool = false
 var NAME : String
 var changingThisInput : bool = false
+
 signal pressedKey
 signal keyChanged
 
@@ -39,8 +41,6 @@ func update_InputMap() -> void:
 	if changedInput:
 		InputMap.action_erase_events(NAME)
 		InputMap.action_add_event(NAME,newEvent)
-		print(NAME)
-		print(newEvent.as_text())
 		curEvent = newEvent
 		changedInput = false
 
