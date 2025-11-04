@@ -3,7 +3,6 @@ class_name control_row extends HBoxContainer
 @export var BUTTON : Button
 @export var LABEL : RichTextLabel
 
-var keycode : String
 var newEvent : InputEvent
 var curEvent : InputEvent
 var changedInput : bool = false
@@ -65,10 +64,9 @@ func _on_button_pressed() -> void:
 
 func _input(event):
 	if changingThisInput:
-		if event is InputEventKey:
+		if event is InputEventKey || event is InputEventMouseButton:
 			if event.pressed:
 				newEvent = event
-				keycode = OS.get_keycode_string(event.keycode) #I dont like this 
 				pressedKey.emit()
 
 
