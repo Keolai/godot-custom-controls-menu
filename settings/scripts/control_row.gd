@@ -8,6 +8,7 @@ var curEvent : InputEvent
 var changedInput : bool = false
 var unbound : bool = false
 var NAME : String
+var changingThisInput : bool = false
 signal pressedKey
 signal keyChanged
 
@@ -38,12 +39,15 @@ func update_InputMap() -> void:
 	if changedInput:
 		InputMap.action_erase_events(NAME)
 		InputMap.action_add_event(NAME,newEvent)
+		print(NAME)
+		print(newEvent.as_text())
 		curEvent = newEvent
 		changedInput = false
 
 
 func _on_button_pressed() -> void:
 	BUTTON.text = "..."
+	changingThisInput = true
 	await pressedKey
 	if !unbound:
 		if !newEvent.is_match(curEvent):
@@ -53,16 +57,19 @@ func _on_button_pressed() -> void:
 		changedInput = true
 		keyChanged.emit()
 		unbound = false
+	
+	changingThisInput = false
 		
 	BUTTON.text = newEvent.as_text()
 
 
 func _input(event):
-	if event is InputEventKey:
-		if event.pressed:
-			newEvent = event
-			keycode = OS.get_keycode_string(event.keycode) #I dont like this 
-			pressedKey.emit()
+	if changingThisInput:
+		if event is InputEventKey:
+			if event.pressed:
+				newEvent = event
+				keycode = OS.get_keycode_string(event.keycode) #I dont like this 
+				pressedKey.emit()
 
 
 func format_label(str: String):
